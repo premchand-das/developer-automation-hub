@@ -78,9 +78,11 @@ jobs:
           Path("README.md").write_text(
               "# Developer Automation Hub\n\n"
               "Automated daily service monitoring.\n\n"
+              "[![Daily Developer Automation](https://github.com/premchand-das/developer-automation-hub/actions/workflows/daily-monitor.yml/badge.svg)](https://github.com/premchand-das/developer-automation-hub/actions/workflows/daily-monitor.yml)\n\n"
               + content +
               "\n\n[Monitoring History](reports/)\n"
-              "\nDaily snapshots, not continuous uptime.\n",
+              "\nDaily snapshots, not continuous uptime.\n"
+              "\nScheduled commits are automated, not manual coding activity.\n",
               encoding="utf-8"
           )
           PY
