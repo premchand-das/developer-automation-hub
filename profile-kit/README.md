@@ -30,29 +30,29 @@ I'm a developer and startup builder from India, working at the intersection of p
 
 ## 03 / Selected projects
 
-| Project | Explore |
-| --- | --- |
-| Covisioner | [Visit the product](https://covisioner.com) |
-| SkepticCore | [Visit the product](https://scipticcore.vercel.app) |
-| SkepticCore Editor | [Source repository](https://github.com/premchand-das/skepticcore-editor) |
-| reelflow | [Visit the product](https://reels.covisioner.com/) |
-| food-order | [Monitoring and automation](https://github.com/premchand-das/food-order) |
+| Project | Focus | Explore |
+| --- | --- | --- |
+| Covisioner | Startup discovery and hiring | [Visit product](https://covisioner.com) |
+| SkepticCore | Critical thinking and knowledge platform | [Visit product](https://scipticcore.vercel.app) · [Source](https://github.com/premchand-das/ScipticCore) |
+| SkepticCore Editor | Editor project | [Source](https://github.com/premchand-das/skepticcore-editor) |
+| ReelFlow | Instagram Reel scheduling and publishing | [Visit product](https://reels.covisioner.com/) |
+| Food Order | Food ordering project | [Source](https://github.com/premchand-das/food-order) |
 
 ## 04 / GitHub activity
 
 <!-- Dynamic images appear after the Profile Assets workflow has run successfully. -->
 <p align="center">
-  <img alt="Public repository statistics" src="https://raw.githubusercontent.com/premchand-das/premchand-das/profile-artifacts/stats.svg" width="600">
+  <img alt="Public repository statistics" src="https://raw.githubusercontent.com/premchand-das/developer-automation-hub/profile-artifacts/stats.svg" width="600">
 </p>
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/premchand-das/premchand-das/profile-artifacts/snake-dark.svg">
-    <img alt="Animated GitHub contribution calendar" src="https://raw.githubusercontent.com/premchand-das/premchand-das/profile-artifacts/snake.svg">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/premchand-das/developer-automation-hub/profile-artifacts/snake-dark.svg">
+    <img alt="Animated GitHub contribution calendar" src="https://raw.githubusercontent.com/premchand-das/developer-automation-hub/profile-artifacts/snake.svg">
   </picture>
 </p>
 
-[Recently updated public repositories](https://github.com/premchand-das/premchand-das/blob/profile-artifacts/projects.md) · [Full contribution history](https://github.com/premchand-das)
+[Recently updated public repositories](https://github.com/premchand-das/developer-automation-hub/blob/profile-artifacts/projects.md) · [Full contribution history](https://github.com/premchand-das)
 
 ## 05 / Building in public
 
