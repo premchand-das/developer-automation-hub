@@ -33,9 +33,10 @@ I'm a developer and startup builder from India, working at the intersection of p
 | Project | Explore |
 | --- | --- |
 | Covisioner | [Visit the product](https://covisioner.com) |
+| SkepticCore | [Visit the product](https://scipticcore.vercel.app) |
 | SkepticCore Editor | [Source repository](https://github.com/premchand-das/skepticcore-editor) |
-| React Projects | [Source repository](https://github.com/premchand-das/react-projects) |
-| Developer Automation Hub | [Monitoring and automation](https://github.com/premchand-das/developer-automation-hub) |
+| reelflow | [Visit the product](https://reels.covisioner.com/) |
+| food-order | [Monitoring and automation](https://github.com/premchand-das/food-order) |
 
 ## 04 / GitHub activity
 
