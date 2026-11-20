@@ -1,0 +1,94 @@
+
+name: Daily Developer Automation
+
+on:
+  schedule:
+    - cron: "47 3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-automation
+  cancel-in-progress: false
+
+jobs:
+  daily-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate daily report
+        run: |
+          python3 <<'PY'
+          import urllib.request
+          import datetime
+          import time
+          import pathlib
+
+          now = datetime.datetime.now(
+              datetime.timezone.utc
+          )
+
+          websites = [
+              "https://covisioner.com",
+              "https://api.covisioner.com/health"
+          ]
+
+          lines = [
+              f"# Automated Report - {now.date()}",
+              "",
+              f"Generated: {now.isoformat()}",
+              ""
+          ]
+
+          for url in websites:
+              start = time.monotonic()
+
+              try:
+                  with urllib.request.urlopen(
+                      url, timeout=20
+                  ) as response:
+                      status = response.status
+
+                  duration = round(
+                      time.monotonic() - start, 2
+                  )
+
+                  lines.append(
+                      f"- {url}: HTTP {status} | {duration}s"
+                  )
+
+              except Exception as error:
+                  lines.append(f"- {url}: {error}")
+
+          folder = pathlib.Path("reports")
+          folder.mkdir(exist_ok=True)
+
+          report = folder / f"{now.date()}.md"
+          report.write_text("\n".join(lines) + "\n")
+          PY
+
+      - name: Commit and push report
+        env:
+          GIT_EMAIL: ${{ vars.GIT_EMAIL }}
+          GIT_USERNAME: ${{ github.repository_owner }}
+        run: |
+          test -n "$GIT_EMAIL"
+
+          git config user.name "$GIT_USERNAME"
+          git config user.email "$GIT_EMAIL"
+
+          git add reports/
+
+          if git diff --cached --quiet; then
+            echo "No changes"
+            exit 0
+          fi
+
+          git commit -m "chore: automated daily monitoring report"
+
+          git push
