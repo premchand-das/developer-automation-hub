@@ -4,6 +4,8 @@ name: Daily Developer Automation
 on:
   schedule:
     - cron: "47 3 * * *"
+    - cron: "47 9 * * *"
+    - cron: "47 15 * * *"
   workflow_dispatch:
 
 permissions:
@@ -23,6 +25,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Generate monitoring report
+        env:
+          MONITOR_SCHEDULE: ${{ github.event.schedule }}
         run: |
           python3 <<'PY'
           from datetime import datetime
@@ -30,16 +34,24 @@ jobs:
           from pathlib import Path
           import urllib.request
           import time
+          import os
 
           now = datetime.now(ZoneInfo("Asia/Kolkata"))
           date = now.strftime("%Y-%m-%d")
+          slots = {
+              "47 3 * * *": "morning",
+              "47 9 * * *": "afternoon",
+              "47 15 * * *": "evening",
+          }
+          manual_slot = "morning" if now.hour < 15 else ("afternoon" if now.hour < 21 else "evening")
+          slot = slots.get(os.environ.get("MONITOR_SCHEDULE", ""), manual_slot)
 
           reports = Path("reports")
           reports.mkdir(exist_ok=True)
-          report = reports / f"{date}.md"
+          report = reports / f"{date}-{slot}.md"
 
           if report.exists():
-              print("Today's report already exists.")
+              print("This monitoring slot already has a report.")
               raise SystemExit(0)
 
           urls = {
@@ -64,7 +76,7 @@ jobs:
               rows.append(f"| {name} | {status} | {duration}s |")
 
           content = "\n".join([
-              f"## Daily Report — {date}",
+              f"## Service Report — {date} ({slot})",
               "",
               f"Generated: {now.isoformat()}",
               "",
@@ -77,10 +89,10 @@ jobs:
 
           Path("README.md").write_text(
               "# Developer Automation Hub\n\n"
-              "Automated daily service monitoring.\n\n"
+              "Automated service monitoring — 09:17, 15:17 and 21:17 IST.\n\n"
               "[![Daily Developer Automation](https://github.com/premchand-das/developer-automation-hub/actions/workflows/daily-monitor.yml/badge.svg)](https://github.com/premchand-das/developer-automation-hub/actions/workflows/daily-monitor.yml)\n\n"
               + content +
-              "\n\n[Monitoring History](reports/)\n"
+              f"\n\n[Source report]({report.as_posix()}) | [Monitoring History](reports/)\n"
               "\nDaily snapshots, not continuous uptime.\n"
               "\nScheduled commits are automated, not manual coding activity.\n",
               encoding="utf-8"
@@ -99,5 +111,5 @@ jobs:
             exit 0
           fi
 
-          git commit -m "chore: automated daily service report"
+          git commit -m "chore: automated service health snapshot"
           git push origin main
