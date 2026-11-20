@@ -1,16 +1,14 @@
 
-name: Daily Developer Automation
+name: Legacy Monitor (manual only)
 
 on:
-  schedule:
-    - cron: "47 3 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: daily-automation
+  group: daily-monitor
   cancel-in-progress: false
 
 jobs:
@@ -69,6 +67,9 @@ jobs:
           folder.mkdir(exist_ok=True)
 
           report = folder / f"{now.date()}.md"
+          if report.exists():
+              print("Today’s report already exists; skipping.")
+              raise SystemExit(0)
           report.write_text("\n".join(lines) + "\n")
           PY
 
