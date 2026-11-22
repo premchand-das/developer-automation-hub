@@ -58,6 +58,11 @@ I'm a developer and startup builder from India, working at the intersection of p
 
 I use GitHub Actions to collect scheduled HTTP health snapshots of Covisioner. The monitoring commits are automated and separate from my manual development work.
 
+- Target monitoring times (IST): **09:17**, **15:17**, and **21:17**.
+- GitHub Actions schedules may run a few minutes late or occasionally be missed.
+- These reports are point‑in‑time snapshots, not continuous uptime monitoring.
+- [View monitoring workflow run history](https://github.com/premchand-das/developer-automation-hub/actions/workflows/daily-monitor.yml)
+
 [View monitoring reports](https://github.com/premchand-das/developer-automation-hub/tree/main/reports)
 
 ---
