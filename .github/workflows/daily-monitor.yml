@@ -3,7 +3,11 @@ name: Daily Developer Automation
 
 on:
   schedule:
+    # Five daily monitoring windows in UTC (GitHub's schedule timezone).
+    # 06:17, 09:17, 12:17, 15:17 and 21:17 Asia/Kolkata (IST).
+    - cron: "47 0 * * *"
     - cron: "47 3 * * *"
+    - cron: "47 6 * * *"
     - cron: "47 9 * * *"
     - cron: "47 15 * * *"
   workflow_dispatch:
@@ -39,11 +43,16 @@ jobs:
           now = datetime.now(ZoneInfo("Asia/Kolkata"))
           date = now.strftime("%Y-%m-%d")
           slots = {
+              "47 0 * * *": "early-morning",
               "47 3 * * *": "morning",
+              "47 6 * * *": "midday",
               "47 9 * * *": "afternoon",
               "47 15 * * *": "evening",
           }
-          manual_slot = "morning" if now.hour < 15 else ("afternoon" if now.hour < 21 else "evening")
+          manual_slot = ("early-morning" if now.hour < 8 else
+                         "morning" if now.hour < 11 else
+                         "midday" if now.hour < 14 else
+                         "afternoon" if now.hour < 18 else "evening")
           slot = slots.get(os.environ.get("MONITOR_SCHEDULE", ""), manual_slot)
 
           reports = Path("reports")
@@ -89,7 +98,7 @@ jobs:
 
           Path("README.md").write_text(
               "# Developer Automation Hub\n\n"
-              "Automated service monitoring — 09:17, 15:17 and 21:17 IST.\n\n"
+              "Automated service monitoring — 06:17, 09:17, 12:17, 15:17 and 21:17 IST.\n\n"
               "[![Daily Developer Automation](https://github.com/premchand-das/developer-automation-hub/actions/workflows/daily-monitor.yml/badge.svg)](https://github.com/premchand-das/developer-automation-hub/actions/workflows/daily-monitor.yml)\n\n"
               + content +
               f"\n\n[Source report]({report.as_posix()}) | [Monitoring History](reports/)\n"
@@ -112,4 +121,6 @@ jobs:
           fi
 
           git commit -m "chore: automated service health snapshot"
-          git push origin main
+          # Rebase if other changes landed while this monitor job was running.
+          git pull --rebase origin main
+          git push origin HEAD:main
